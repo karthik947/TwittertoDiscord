@@ -13,4 +13,4 @@ Thank you for your contribution.
 * BTC Address: 1BwSbBvx98bqSEHFETnLqEBC7dZqf4yLv4
 * MEW Address: 0xFC5479343d791eca8EEBB01C488e0a5F460f0453
 
-click [here](https://youtu.be/Rlx8LjHo9Jc) to watch the youtube video.
+click [here](https://www.youtube.com/watch?v=72ADPlseO4o&feature=youtu.be) to watch the youtube video.
