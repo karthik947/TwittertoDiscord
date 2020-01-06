@@ -3,18 +3,12 @@ const E = require('events');
 const request = require('request');
 const separateReqPool = {maxSockets: 15};
 const async = require('async');
+const _ = require('lodash');
 let tweets={},apiurls=[],N=[];
 
 
 ///////////////////////////  CONFIGURE TWITTER HANDLERS /////////////////////////////////////////////////////
 var THandlers=[
-    {
-        name:'WhaleWatch',
-        url:"https://twitter.com/whalewatchio?lang=en",
-        webhook:"https://discordapp.com/api/webhooks/623550424896503828/2pHcXVLnP4l5IlM0cLULbm6WvhWGWZNHL7P9b1qMdOj7CyfiXWmzCaoxxWIm_PZUKtR1",
-        avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
-        keywords:"long",
-    },
     {
         name:'Karthik',
         url:"https://twitter.com/Karthikdk72?lang=en",
@@ -47,37 +41,32 @@ setInterval(() => {
             try {
                 const $ = cheerio.load(body);
                 var turl = "https://twitter.com" + response.req.path;
+                const th_name = THandlers.filter((d,i) => d.url === turl)[0].name;
                 if(!tweets[turl].length){
                     //FIRST LOAD
-                    for(let i=0;i<$('div.js-tweet-text-container p').length;i++){
-                        tweets[turl].push($('div.js-tweet-text-container p').eq(i).text());
-                    }
+                    const turls = $('div.js-actionable-tweet').map((i,d) => d["attribs"]["data-permalink-path"]);
+                    tweets[turl] = _.difference($('div.js-tweet-text-container p').map((i,d) => {return {url:turls[i],text:$('div.js-tweet-text-container p').eq(i).text()}}));
                 }
                 else{
                     //EVERY OTHER TIME
-                    for(let i=0;i<$('div.js-tweet-text-container p').length;i++){
-                        const s_tweet = $('div.js-tweet-text-container p').eq(i).text();
-                        //CHECK IF TWEET IS NEWS
-                        if(tweets[turl].indexOf(s_tweet) === -1){
-                            tweets[turl].push(s_tweet);
-                            const th_kw = THandlers.filter((d,i) => d.url === turl)[0].keywords.split(',');
-                            const th_name = THandlers.filter((d,i) => d.url === turl)[0].name;
-                            let nFlag=false;
-                            th_kw.forEach((kw,j) => {
-                                if(kw === '*'){
-                                    nFlag=true;
-                                }
-                                else{
-                                   if(s_tweet.indexOf(kw) != -1){
-                                        nFlag=true;
-                                    }
-                                }
-                            });
-                            if(nFlag){
-                               sendDiscordMessage({content:s_tweet,turl:turl});
-                            }
-                        }
-                    }
+                    const turls = $('div.js-actionable-tweet').map((i,d) => d["attribs"]["data-permalink-path"]);
+                    const ctweets = _.difference($('div.js-tweet-text-container p').map((i,d) => {return {url:turls[i],text:$('div.js-tweet-text-container p').eq(i).text()}}));
+                    const ntweets = ctweets.filter(t => !_.find(tweets[turl],t));
+
+                    ntweets.filter(d => {
+                      const th_kw = THandlers.filter((d,i) => d.url === turl)[0].keywords.split(',');
+                      if(th_kw.includes('*')){
+                        return true;
+                      } else{
+                        const checkTexts = th_kw.map(kw => d.text.includes(kw) ? true : false);
+                        return checkTexts.includes(false) ? false : true;
+                      }
+                    }).forEach(t => {
+                      const {text:content} = t;
+                      sendDiscordMessage({content,turl});
+                    });
+                    // tweets[turl] = tweets[turl].concat(ntweets);
+                    tweets[turl] = [...tweets[turl],...ntweets];
                 }
 
             } catch (e) {
