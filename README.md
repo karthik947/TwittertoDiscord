@@ -2,7 +2,7 @@
 This is a new version of "TweetMonitor" tool that I shared few weeks ago. In this new program, the tweets are posted onto a discord server instead of desktop notifications.
 
 ### Version2 Changes
-<span style="background-color: yellow"> This version of the bot posts link to the tweet instead of text. This version is added due to multiple requests from subscribers. </span>
+<span style="background-color: #FFDC00;"> This version of the bot posts link to the tweet instead of text. This version is added due to multiple requests from subscribers. </span>
 
 
 ### Key Updates
