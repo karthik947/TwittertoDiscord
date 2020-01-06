@@ -18,9 +18,9 @@ var THandlers=[
     {
         name:'Karthik',
         url:"https://twitter.com/Karthikdk72?lang=en",
-        webhook:"https://discordapp.com/api/webhooks/623550424896503828/2pHcXVLnP4l5IlM0cLULbm6WvhWGWZNHL7P9b1qMdOj7CyfiXWmzCaoxxWIm_PZUKtR1",
-        avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
-        keywords:"*",
+        webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
+        avatar_url:"https://pbs.twimg.com/profile_images/1072041449200398336/UKuZcIiO_400x400.jpg",
+        keywords:"BTC",
     }
 ];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ setInterval(() => {
                         if(tweets[turl].indexOf(s_tweet) === -1){
                             tweets[turl].push(s_tweet);
                             const th_kw = THandlers.filter((d,i) => d.url === turl)[0].keywords.split(',');
-                            const th_name = THandlers.filter((d,i) => d.url === turl)[0].name; 
+                            const th_name = THandlers.filter((d,i) => d.url === turl)[0].name;
                             let nFlag=false;
                             th_kw.forEach((kw,j) => {
                                 if(kw === '*'){
@@ -78,8 +78,8 @@ setInterval(() => {
                             }
                         }
                     }
-                }           
-                 
+                }
+
             } catch (e) {
                   console.log('Error =>' + e);
             }
