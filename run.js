@@ -13,8 +13,8 @@ var THandlers=[
         name:'Karthik',
         url:"https://twitter.com/Karthikdk72?lang=en",
         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
-        avatar_url:"https://pbs.twimg.com/profile_images/1072041449200398336/UKuZcIiO_400x400.jpg",
-        keywords:"BTC",
+        avatar_url:"https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg",
+        keywords:"*",
     }
 ];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,8 +62,8 @@ setInterval(() => {
                         return checkTexts.includes(false) ? false : true;
                       }
                     }).forEach(t => {
-                      const {text:content} = t;
-                      sendDiscordMessage({content,turl});
+                      const {url:content} = t;
+                      sendDiscordMessage({content: `https://twitter.com${content}`,turl});
                     });
                     // tweets[turl] = tweets[turl].concat(ntweets);
                     tweets[turl] = [...tweets[turl],...ntweets];
