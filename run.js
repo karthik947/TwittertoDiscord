@@ -16,15 +16,6 @@ var THandlers=[
         avatar_url:"https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg",
         keywords:"*",
     },
-//     {
-//         name:'Fat Kid Deals',
-//         url:"https://twitter.com/Tainguynpdx?lang=en",
-//         // webhook:"https://discordapp.com/api/webhooks/717922216473395247/lVi2i8zL_AeCdhthzS8y4XLSh_QlwOS1zevupfQogO-Q6JGPS5mJ_jtF9OoMbLTFyzvi",
-//         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
-//         avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
-//         keywords:"*",
-//
-//     }
 ];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
