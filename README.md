@@ -1,8 +1,8 @@
 # Twitter to Discord using Webhooks
 This is a new version of "TweetMonitor" tool that I shared few weeks ago. In this new program, the tweets are posted onto a discord server instead of desktop notifications.
 
-### Verion 4
-Twitter UI has been recently updated. So releasing a new version to make it compatible with the new UI. Older versions are obsolete.
+### Update [6/5/2020]
+Twitter UI has been recently updated. So this version is no longer active. Please download version4 branch.
 
 ### Key Updates
 * Instead of desktop notifications, tweets are send to discord server.
