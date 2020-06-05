@@ -1,8 +1,8 @@
 # Twitter to Discord using Webhooks
 This is a new version of "TweetMonitor" tool that I shared few weeks ago. In this new program, the tweets are posted onto a discord server instead of desktop notifications.
 
-### Version3 Changes
-<span style="color: #FFDC00;"> This version of the bot posts link to the tweet instead of text. This version is added due to multiple requests from subscribers. </span>
+### Version4 Changes
+<span style="color: #FFDC00;"> Twitter UI has been recently updated. So releasing this version to make the bot compatible with the UI. Older versions are obsolete and no longer functional. </span>
 
 
 ### Key Updates
