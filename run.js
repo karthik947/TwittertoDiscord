@@ -11,7 +11,7 @@ let tweets={},apiurls=[],N=[];
 var THandlers=[
     {
         name:'Karthik',
-        url:"https://twitter.com/Karthik82167867?lang=en",
+        url:"https://twitter.com/Karthikdk72?lang=en",
         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
         avatar_url:"https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg",
         keywords:"tango",
