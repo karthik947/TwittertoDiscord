@@ -11,7 +11,7 @@ var THandlers=[
     {
         name:'WhaleWatch',
         url:"https://twitter.com/whalewatchio?lang=en",
-        webhook:"https://discordapp.com/api/webhooks/623550424896503828/2pHcXVLnP4l5IlM0cLULbm6WvhWGWZNHL7P9b1qMdOj7CyfiXWmzCaoxxWIm_PZUKtR1",
+        webhook:"https://discordapp.com/api/webhooks/623550424896503828/",
         avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
         keywords:"long",
     },
