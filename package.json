@@ -4,6 +4,8 @@
   "description": "",
   "main": "run.js",
   "dependencies": {
+    "form-data": "^4.0.0",
+    "got": "^11.8.2",
     "puppeteer": "^8.0.0"
   },
   "devDependencies": {},

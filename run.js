@@ -1,100 +1,106 @@
-const cheerio = require('cheerio');
-const E = require('events');
-const request = require('request');
-const separateReqPool = {maxSockets: 15};
-const async = require('async');
-const _ = require('lodash');
-let tweets={},apiurls=[],N=[];
-
+const log = console.log;
+const { default: got } = require('got/dist/source');
+const puppeteer = require('puppeteer');
+const FormData = require('form-data');
+let tweets = {};
 
 ///////////////////////////  CONFIGURE TWITTER HANDLERS /////////////////////////////////////////////////////
-var THandlers=[
-    {
-        name:'Karthik',
-        url:"https://twitter.com/Karthikdk72?lang=en",
-        webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
-        avatar_url:"https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg",
-        keywords:"*",
-    },
-//     {
-//         name:'Fat Kid Deals',
-//         url:"https://twitter.com/Tainguynpdx?lang=en",
-//         // webhook:"https://discordapp.com/api/webhooks/717922216473395247/lVi2i8zL_AeCdhthzS8y4XLSh_QlwOS1zevupfQogO-Q6JGPS5mJ_jtF9OoMbLTFyzvi",
-//         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
-//         avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
-//         keywords:"*",
-//
-//     }
+const THandlers = [
+  {
+    name: 'Karthik',
+    url: 'https://twitter.com/Karthik82167867?lang=en',
+    webhook:
+      'https://discord.com/api/webhooks/735186145373323396/y8R6roeeucC-t_7o6AnguLY_htky68HrFXzHO1aowDm-Ggw2qvnnSQcCJS2hVDCBpsvA',
+    avatar_url:
+      'https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg',
+    keywords: '*',
+  },
+  //     {
+  //         name:'Fat Kid Deals',
+  //         url:"https://twitter.com/Tainguynpdx?lang=en",
+  //         // webhook:"https://discordapp.com/api/webhooks/717922216473395247/lVi2i8zL_AeCdhthzS8y4XLSh_QlwOS1zevupfQogO-Q6JGPS5mJ_jtF9OoMbLTFyzvi",
+  //         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
+  //         avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
+  //         keywords:"*",
+  //
+  //     }
 ];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//ADD TWEETS
-THandlers.forEach((th,i) => {
-    tweets[th.url] = [];
-    apiurls.push(th.url);
-});
+const getTweets = async ({ name, url, webhook, avatar_url, keywords }) => {
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url, {
+      waitUntil: 'networkidle2',
+    });
+    await page.waitForTimeout(3000);
+
+    const cTweets = await page.evaluate(() => {
+      return [...document.querySelectorAll("article[role='article']")].map(
+        (r) => r.innerText
+      );
+    });
+    await browser.close();
+    if (!tweets[url]) {
+      //FIRST LOAD
+      tweets[url] = [...cTweets];
+    } else {
+      //EVERY OTHER TIME
+      const slicelen = cTweets
+        .map((d) => {
+          return tweets[url].indexOf(d);
+        })
+        .indexOf(0);
+      const ntweets = slicelen === -1 ? [] : cTweets.slice(0, slicelen);
+      tweets[url] = [...cTweets];
+      await Promise.all(
+        ntweets
+          .filter((tweet) =>
+            keywords === '*'
+              ? true
+              : keywords.map((kw) => tweet.includes(kw)).filter((k) => k).length
+          )
+          .map((tweetText) =>
+            sendDiscordMessage({
+              tweetText,
+              webhook,
+              avatar_url,
+              keywords,
+              name,
+            })
+          )
+      );
+      ntweets.forEach(log);
+    }
+  } catch (err) {
+    log(err);
+  }
+};
+
+const app = async () => {
+  try {
+    return await Promise.all(THandlers.map(getTweets));
+  } catch (err) {
+    log(err);
+  }
+};
 
 //DISCORD WEBHOOK
-const sendDiscordMessage = (pl) => {
-    const {content,turl} = pl;
-    const {name,webhook,avatar_url} = THandlers.filter((d,i) => d.url === turl)[0];
-    request.post(webhook).form({username:name,avatar_url:avatar_url,content:content});
-}
+const sendDiscordMessage = async ({ tweetText, webhook, avatar_url, name }) => {
+  try {
+    let form = new FormData();
+    form.append('username', name);
+    form.append('avatar_url', avatar_url);
+    form.append('content', tweetText.split('\n').slice(-1)[0]);
+    return await got.post(webhook, {
+      body: form,
+    });
+  } catch (err) {
+    return log(err);
+  }
+};
 
 console.log('Twitter => Discord program is running');
 
-const headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36'}
-
-//MONITOR
-setInterval(() => {
-    async.map(apiurls, function(item, callback){
-        request({url: item,headers, pool: separateReqPool}, function (error, response, body) {
-            try {
-                const $ = cheerio.load(body);
-                var turl = "https://twitter.com" + response.req.path;
-                const th_name = THandlers.filter((d,i) => d.url === turl)[0].name;
-                if(!tweets[turl].length){
-                    //FIRST LOAD
-                    (() => {
-                      const turls = $('table.tweet').toArray().map(d => d["attribs"]["href"]);
-                      const tweethtml = $('div.tweet-text').toArray().map(d => $(d).html());
-                      tweets[turl] = turls.map((d,i) => {return  {url:turls[i],text:tweethtml[i]}});
-                    })()
-                }
-                else{
-                    (() => {
-                      //EVERY OTHER TIME
-                      const turls = $('table.tweet').toArray().map(d => d["attribs"]["href"]);
-                      const tweethtml = $('div.tweet-text').toArray().map(d => $(d).html());
-
-                      const newTweets = turls.map((d,i) => {return  {url:turls[i],text:tweethtml[i]}});
-
-                      const oldturls = tweets[turl].map(d => d.url);
-                      const slicelen = turls.map(d => {return oldturls.indexOf(d);}).indexOf(0);
-
-                      const ntweets = slicelen === -1 ? [] : newTweets.slice(0,slicelen);
-
-                      ntweets.filter(d => {
-                        const th_kw = THandlers.filter((d,i) => d.url === turl)[0].keywords.split(',');
-                        if(th_kw.includes('*')){
-                          return true;
-                        } else{
-                          const checkTexts = th_kw.map(kw => d.text.includes(kw) ? true : false);
-                          return checkTexts.includes(false) ? false : true;
-                        }
-                      }).forEach(t => {
-                        const {url:content} = t;
-                        sendDiscordMessage({content: `https://twitter.com${content}`,turl});
-                      });
-                      tweets[turl] = newTweets;
-                    })()
-                }
-
-            } catch (e) {
-                  console.log('Error =>' + e);
-            }
-        });
-    }, function(err, results){
-            //console.log(results);
-    });
-},1*1000);//RUNS EVERY 1 SECONDS
+setInterval(app, 10 * 1000);
