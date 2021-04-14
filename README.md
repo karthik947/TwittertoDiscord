@@ -8,7 +8,7 @@ This is a new version of "TweetMonitor" tool that I shared few weeks ago. In thi
 
 ### Version5 Changes
 
-<span style="color: #FFDC00;"> Twitter webpage is updated again, which required to update the code. The new version posts only tweet text, as I couldn't find the tweet link by scraping. Also, the website is now rendered on the client side, so the old way of calling the webpage with User Agent flag is rendered obsolete. Puppeteer is used to overcome this issue, which works as a headless browser control api.</span>
+<span style="color: #FFDC00;"> Twitter webpage is updated again, which required to update the code. The new version posts only tweet text, as I couldn't find the tweet link by scraping. Also, the website is now rendered on the client side, so the old way of calling the webpage with User Agent flag is rendered obsolete. Puppeteer is used to overcome this issue, which works as a headless browser control api. Make sure to run "npm install" to install dependencies, after downloading the version5</span>
 
 ### Key Updates
 

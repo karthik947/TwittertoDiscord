@@ -8,9 +8,8 @@ let tweets = {};
 const THandlers = [
   {
     name: 'Karthik',
-    url: 'https://twitter.com/Karthik82167867?lang=en',
-    webhook:
-      'https://discord.com/api/webhooks/735186145373323396/y8R6roeeucC-t_7o6AnguLY_htky68HrFXzHO1aowDm-Ggw2qvnnSQcCJS2hVDCBpsvA',
+    url: 'https://twitter.com/Karthikdfsasdfass?lang=en',
+    webhook: 'https://discord.com/api/webhooks/7351dfasfdassfadfas6/adfasf',
     avatar_url:
       'https://c8.alamy.com/comp/REBBXT/manbrunettehairwighaircutraglanorangehairdresserfashionavatardummypersonimageportraithairstyleprofessionalphotocharacterprofilesetvectoriconillustrationisolatedcollectiondesignelementgraphicsignblacksimple-vector-vectors-REBBXT.jpg',
     keywords: '*',
@@ -18,9 +17,9 @@ const THandlers = [
   //     {
   //         name:'Fat Kid Deals',
   //         url:"https://twitter.com/Tainguynpdx?lang=en",
-  //         // webhook:"https://discordapp.com/api/webhooks/717922216473395247/lVi2i8zL_AeCdhthzS8y4XLSh_QlwOS1zevupfQogO-Q6JGPS5mJ_jtF9OoMbLTFyzvi",
-  //         webhook:"https://discordapp.com/api/webhooks/628116875481579520/V-UoVZPPnSmkWHAO99Pbn9IKSWhlMuLQlwqAKPOwwrwGCrEI2gbnwCzW05j0MChWNGWz",
-  //         avatar_url:"https://www.sideshow.com/storage/product-images/903429/thanos_marvel_feature.jpg",
+  //         // webhook:"https://discordapp.com/api/webasdfsdsdsad_dsfsaddfasgO-Q6JGPS5mJ_jtF9OoMbLTFyzvi",
+  //         webhook:"https://discordfsafasbnwCzW05j0MChWNGWz",
+  //         avatar_url:"https:/dafasdfassaimages/903asdfasdfarvel_feature.jpg",
   //         keywords:"*",
   //
   //     }
